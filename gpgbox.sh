@@ -5,12 +5,15 @@
 # Uses GPG to encrypt a folder with a passphrase.
 # For example, use this to securely store a folder into Dropbox.
 
+# Configurable file locations
 ENCRYPTED=~/Dropbox/GPGBox.tar.gz.gpg
 DECRYPTED=~/Desktop/GPGBox
 
+# Stop on error. And even if in a pipe.
 set -e
 set -o pipefail
 
+# RTFM. I like to keep this near the top.
 function print_help {
     cat<<EOD
 Usage: gpgbox COMMAND
@@ -32,25 +35,6 @@ $ gpgbox -e
 $ gpgbox -d
 EOD
 }
-
-OPTS=`getopt -o deh --long decrypt,encrypt,help,init -n 'gpgbox' -- "$@"`
-if [ $? != 0 ] ; then echo "Failed parsing options." >&2 ; exit 1 ; fi
-
-DECRYPT=false
-ENCRYPT=false
-HELP=false
-INIT=false
-
-while true; do
-  case "$1" in
-    -d | --decrypt ) DECRYPT=true; shift;;
-    -e | --encrypt ) ENCRYPT=true; shift ;;
-    -h | --help )    HELP=true; shift ;;
-    --init ) INIT=true; shift;;
-    -- ) shift; break ;;
-    * ) break ;;
-  esac
-done
 
 function do_encrypt {
     if [[ ! -d "$DECRYPTED" ]]; then
@@ -88,6 +72,26 @@ function do_init {
     mkdir -p "$DECRYPTED"
 }
 
+# Begin main script.
+# Parse command line args.
+OPTS=`getopt -o deh --long decrypt,encrypt,help,init -n 'gpgbox' -- "$@"`
+if [ $? != 0 ] ; then echo "Failed parsing options." >&2 ; exit 1 ; fi
+
+DECRYPT=false
+ENCRYPT=false
+HELP=false
+INIT=false
+
+while true; do
+  case "$1" in
+    -d | --decrypt ) DECRYPT=true; shift;;
+    -e | --encrypt ) ENCRYPT=true; shift ;;
+    -h | --help )    HELP=true; shift ;;
+    --init ) INIT=true; shift;;
+    -- ) shift; break ;;
+    * ) break ;;
+  esac
+done
 
 if [[ "$HELP" = "true" ]]; then
     print_help

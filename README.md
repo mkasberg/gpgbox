@@ -2,6 +2,10 @@
 
 Securely store a folder in Dropbox using GPG.
 
+GPGBox is really just a simple shell script that makes it easy to encrypt an
+entire folder into a single encrypted file (for example, to put in Dropbox). It
+also makes it easy to decrypt that file and get the folder back.
+
 ## Installation
 
 First, make sure you have GPG installed.
