@@ -4,6 +4,11 @@ Securely store a folder in Dropbox using GPG.
 
 ## Installation
 
+First, make sure you have GPG installed.
+
+ * Linux: Should already be installed. Otherwise, `sudo apt-get install gpg`.
+ * Mac: `brew install gpg`.
+
 GPGBox is really just a Bash script. Install it by adding it to your path, or by
 copying or symlinking it to a location in your path. For your convenience, a
 Makefile is provided to help with this (or just do it yourself, if you prefer).
